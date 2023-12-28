@@ -1,0 +1,45 @@
+<!doctypehtml><html lang=en><meta charset=UTF-8><meta content="width=device-width,initial-scale=1"name=viewport><title>Art. dev.</title><style>*{margin:0;padding:0}.monstro-terrivel{width:250px;height:250px;background-color:#161617;border-radius:48% 52% 70% 30%/42% 30% 70% 58%;transition:border-radius 1s ease}.caixa{width:250px;height:250px;background-color:#161617;position:absolute;background:0 0;border:solid 3px #161617}body{display:flex;align-items:center;justify-content:center;height:100vh;background-color:#fbfbfd}#botao{position:absolute;right:0;top:0;cursor:pointer!important}.aberta{display:none}.livre{animation:crescer 3s forwards;animation-iteration-count:1;width:100vw;height:100vh}@keyframes crescer{0%{width:30vw;height:30vh}50%{width:50vw;height:50vh}100%{width:100vw;height:100vh}}</style><div class=monstro-terrivel></div><div class=caixa></div><div><button id=botao title="Em hipótese alguma abra a caixa">Abrir caixa</button></div><script>function getLocalStorageItem(key) {
+  return localStorage.getItem(key);
+}
+
+// Função para definir um valor na localStorage
+function setLocalStorageItem(key, value) {
+  localStorage.setItem(key, value);
+}
+
+function getRandomValue() {
+  return Math.floor(Math.random() * 81) + 10; // Gera um valor entre 10 e 90
+}
+
+function alterarBorderRadiusAutomaticamente() {
+  const divArredondada = document.querySelector('.monstro-terrivel');
+
+  setInterval(() => {
+    // Gere novos valores para o border-radius de forma aleatória
+    const novoBorderRadius = `${getRandomValue()}% ${getRandomValue()}% ${getRandomValue()}% ${getRandomValue()}% / ${getRandomValue()}% ${getRandomValue()}% ${getRandomValue()}% ${getRandomValue()}%`;
+
+    // Atribua os novos valores ao estilo da div
+    divArredondada.style.borderRadius = novoBorderRadius;
+  }, 1000); // Altera a cada 2 segundos
+}
+
+alterarBorderRadiusAutomaticamente();
+
+const caixa = document.querySelector('.caixa');
+const monstro_terrivel = document.querySelector('.monstro-terrivel');
+const botao = document.getElementById('botao');
+
+const isCaixaAberta = getLocalStorageItem('monstro_livre');
+
+if (isCaixaAberta === 'true') {
+  caixa.classList.add('aberta');
+  monstro_terrivel.classList.add('livre');
+}
+
+botao.addEventListener('click', function(){
+  caixa.classList.add('aberta');
+  setTimeout(function () {
+    monstro_terrivel.classList.add('livre');
+  }, 1000);
+  setLocalStorageItem('monstro_livre', 'true');
+});</script>
